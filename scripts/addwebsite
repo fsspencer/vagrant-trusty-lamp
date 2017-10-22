@@ -1,0 +1,33 @@
+#!/bin/sh
+
+WEBROOT="/var/www/"
+VHOSTDIR="/etc/apache2/sites-available/"
+EXTENSION=""
+RESTARTCMD="/usr/bin/sudo service apache2 reload"
+
+if [ "$1" != '' ]; then
+  if [ ! -f "$VHOSTDIR$1.conf" ]; then
+    cp "$VHOSTDIR/skeleton" "$VHOSTDIR$1$EXTENSION"
+    echo "created $VHOSTDIR$1$EXTENSION"
+  else
+    mv "$VHOSTDIR$1.conf" "$VHOSTDIR$1$EXTENSION.bak"
+    cp "$VHOSTDIR/skeleton" "$VHOSTDIR$1$EXTENSION"
+    echo "Created $VHOSTDIR$1$EXTENSION and made a backup of the existing conf"
+  fi
+  find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SKELETON/$1/public_html/" {} \;
+  if [ ! -d "$WEBROOT$1/" ]; then
+    mkdir -p "$WEBROOT$1/public_html"
+    mkdir -p "$WEBROOT$1/log"
+    chown -R vagrant:www-data "$WEBROOT$1/"
+    echo "Created $WEBROOT$1/"
+  else
+    echo "$WEBROOT$1/ already exists"
+  fi
+  sudo a2ensite $1
+  $RESTARTCMD
+  echo "Apache reloaded"
+elif [ "$1" = 'help' ] || [ "$1" = '' ]; then
+  echo "USAGE:"
+  echo "sudo addwebsite "
+  echo "EXAMPLE: to create hostname.localhost just run the command 'sudo addwebsite hostname.localhost'"
+fi
