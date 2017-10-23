@@ -1,17 +1,17 @@
 <VIRTUALHOST *:80>
  ServerAdmin webmaster@localhost
- ServerName SKELETON
- DocumentRoot /var/www/SKELETON
+ ServerName SITEDOMAIN
+ DocumentRoot /var/www/SITEDOCROOT
  <DIRECTORY />
  Options FollowSymLinks
  AllowOverride None
  </DIRECTORY>
- <DIRECTORY /var/www/SKELETON/>
+ <DIRECTORY /var/www/SITEDOCROOT/>
   Options +FollowSymLinks
   AllowOverride All
  </DIRECTORY>
- ErrorLog ${APACHE_LOG_DIR}/SKELETON_error.log
+ ErrorLog /var/www/SITEDOMAIN/log/error.log
  # Possible values: debug, info, notice, warn, error, crit, alert, emerg
  LogLevel warn
- CustomLog ${APACHE_LOG_DIR}/SKELETON_access.log combined
+ CustomLog /var/www/SITEDOMAIN/log/access.log combined
 </VIRTUALHOST>
