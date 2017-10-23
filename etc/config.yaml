@@ -5,6 +5,7 @@ configs:
         memory: 2048
         mysql_root_pwd: root
     services:
+        xdebug: true
         nodejs: true
         redis: true
         memcached: true
