@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$1" != '' ] && [ "$2" != '' ]; then
   echo "Please enter your MySQL root password: "
-  read -s SQLROOTPW
+  read SQLROOTPW
 
   echo "CREATE DATABASE $1" | mysql -uroot -p$SQLROOTPW
   echo "CREATE USER '$1'@'localhost' IDENTIFIED BY '$2';" | mysql -uroot -p$SQLROOTPW
@@ -10,7 +10,6 @@ if [ "$1" != '' ] && [ "$2" != '' ]; then
   echo "flush privileges" | mysql -uroot -p$SQLROOTPW
   echo "User and database called '$1' added."
 elif [ "$1" = 'help' ] || [ "$1" = '' ]; then
-  echo "USAGE:"
-  echo "sudo adddb [database name] [database user password]"
+  echo "USAGE: sudo adddb [database name] [database user password]"
   echo "Example: to create a new database just run the command 'sudo adddb mywebsite mypassword'"
 fi

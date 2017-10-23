@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 WEBROOT="/var/www/"
 VHOSTDIR="/etc/apache2/sites-available/"
-EXTENSION=""
+EXTENSION=".conf"
 RESTARTCMD="/usr/bin/sudo service apache2 reload"
 
 if [ "$1" != '' ]; then
@@ -14,7 +14,8 @@ if [ "$1" != '' ]; then
     cp "$VHOSTDIR/skeleton" "$VHOSTDIR$1$EXTENSION"
     echo "Created $VHOSTDIR$1$EXTENSION and made a backup of the existing conf"
   fi
-  find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SKELETON/$1/public_html/" {} \;
+  find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SITEDOCROOT/$1\/public_html/g" {} \;
+  find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SITEDOMAIN/$1/g" {} \;
   if [ ! -d "$WEBROOT$1/" ]; then
     mkdir -p "$WEBROOT$1/public_html"
     mkdir -p "$WEBROOT$1/log"
@@ -27,7 +28,6 @@ if [ "$1" != '' ]; then
   $RESTARTCMD
   echo "Apache reloaded"
 elif [ "$1" = 'help' ] || [ "$1" = '' ]; then
-  echo "USAGE:"
-  echo "sudo addwebsite "
+  echo "USAGE: sudo addwebsite [website local url]"
   echo "EXAMPLE: to create hostname.localhost just run the command 'sudo addwebsite hostname.localhost'"
 fi
