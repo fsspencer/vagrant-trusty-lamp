@@ -13,6 +13,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, :path => "bootstrap.sh"
   config.vm.provision :shell, :path => "install/composer.sh"
   
+  if configs['configs']['services']['xdebug'] == true
+    config.vm.provision :shell, :path => "install/xdebug.sh"
+  end
   if configs['configs']['services']['nodejs'] == true
     config.vm.provision :shell, :path => "install/nodejs.sh"
   end
