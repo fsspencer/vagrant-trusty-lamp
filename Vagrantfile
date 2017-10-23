@@ -12,8 +12,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.provision :shell, :path => "bootstrap.sh"
-
-  # All of the following are optional. Feel free to comment those you don't want to install
   config.vm.provision :shell, :path => "install/memcached.sh"
   config.vm.provision :shell, :path => "install/composer.sh"
   config.vm.provision :shell, :path => "install/nodejs.sh"
