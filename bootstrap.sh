@@ -4,8 +4,9 @@ add-apt-repository ppa:ondrej/php 2> /dev/null
 apt-get update 2> /dev/null
 
 apt-get install -y php5.6 php7.0 php-pear 2> /dev/null
-apt-get install -y php5.6-dev php5.6-gd php5.6-curl php5.6-mcrypt 2> /dev/null
-apt-get install -y php7.0-dev php7.0-gd php7.0-curl php7.0-mcrypt 2> /dev/null
+apt-get install -y php5.6-dev php5.6-gd php5.6-curl php5.6-mcrypt php5.6-dom php5.6-intl php5.6-mbstring php5.6-zip php5.6-soap php5.6-mysql 2> /dev/null
+apt-get install -y php7.0-dev php7.0-gd php7.0-curl php7.0-mcrypt php7.0-dom php7.0-intl php7.0-mbstring php7.0-zip php7.0-soap php7.0-mysql 2> /dev/null
+apt-get install -y php7.1-dev php7.1-gd php7.1-curl php7.1-mcrypt php7.1-dom php7.1-intl php7.1-mbstring php7.1-zip php7.1-soap php7.1-mysql 2> /dev/null
 a2dismod php5.6
 a2dismod php7.1
 a2enmod php7.0
