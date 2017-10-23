@@ -29,6 +29,7 @@ Specifications
 > - PHP 5.6
 > - PHP 7.0
 > - PHP 7.1
+> - XDebug
 > - Composer
 > - Redis
 > - Memcached
@@ -36,6 +37,18 @@ Specifications
 > - Gulp
 > - Grunt
 > - Postfix / Mailutils
+> - ElasticSearch
+
+
+----------
+
+Configuration
+-------------
+
+Before starting, you need to copy etc/config.yaml.sample to etc/config.yaml and set your preferences.
+There you can set the Memory you want to allocate to the box, mysql root's password and which modules you want to install.
+
+> **IMPORTANT:** You wont be able to initiate the box without creating the config.yaml file.
 
 ----------
 
