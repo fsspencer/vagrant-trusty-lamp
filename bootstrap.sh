@@ -20,8 +20,9 @@ echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | tee -a /etc/apt/
 apt-get update
 
 debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir select ''"
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password ${vagrant_config[mysql_root_pwd]}'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password ${vagrant_config[mysql_root_pwd]}'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password ${configs[configs][general][mysql_root_pwd]}'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password ${configs[configs][general][mysql_root_pwd]}'
+
 apt-get install -y mysql-server 2> /dev/null
 
 apt-get install -y apache2 2> /dev/null
