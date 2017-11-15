@@ -9,6 +9,7 @@ configs        = YAML.load_file("#{current_dir}/etc/config.yaml")
 Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/trusty64"
+  config.vm.hostname = "codealist-lamp"
 
   config.vm.provision :shell, :path => "bootstrap.sh"
   config.vm.provision :shell, :path => "install/composer.sh"
@@ -34,6 +35,8 @@ Vagrant.configure("2") do |config|
   if configs['configs']['services']['elasticsearch'] == true
     config.vm.provision :shell, :path => "install/elasticsearch.sh"
   end
+
+  config.vm.provision "shell", inline: "sudo mysql -uroot -e \"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${configs[configs][general][mysql_root_pwd]}';\" 2> /dev/null"
 
   config.vm.network "private_network", ip: configs['configs']['general']['public_ip']
 

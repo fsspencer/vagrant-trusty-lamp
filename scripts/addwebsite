@@ -6,6 +6,8 @@ EXTENSION=".conf"
 RESTARTCMD="/usr/bin/sudo service apache2 reload"
 
 if [ "$1" != '' ]; then
+
+  # Copy the vhost skeleton to our new vhost
   if [ ! -f "$VHOSTDIR$1.conf" ]; then
     cp "$VHOSTDIR/skeleton" "$VHOSTDIR$1$EXTENSION"
     echo "created $VHOSTDIR$1$EXTENSION"
@@ -14,19 +16,25 @@ if [ "$1" != '' ]; then
     cp "$VHOSTDIR/skeleton" "$VHOSTDIR$1$EXTENSION"
     echo "Created $VHOSTDIR$1$EXTENSION and made a backup of the existing conf"
   fi
+
+  # Add website directory index to vhost configuration
   find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SITEDOCROOT/$1\/public_html/g" {} \;
   find "$VHOSTDIR$1$EXTENSION" -type f -exec sed -i "s/SITEDOMAIN/$1/g" {} \;
+
+  # Create Website File Structure if does not exists
   if [ ! -d "$WEBROOT$1/" ]; then
     mkdir -p "$WEBROOT$1/public_html"
     mkdir -p "$WEBROOT$1/log"
     chown -R vagrant:www-data "$WEBROOT$1/"
     echo "Created $WEBROOT$1/"
-  else
-    echo "$WEBROOT$1/ already exists"
   fi
+
+  # Enable our new website and restart apache
   sudo a2ensite $1
   $RESTARTCMD
+
   echo "Apache reloaded"
+
 elif [ "$1" = 'help' ] || [ "$1" = '' ]; then
   echo "USAGE: sudo addwebsite [website local url]"
   echo "EXAMPLE: to create hostname.localhost just run the command 'sudo addwebsite hostname.localhost'"

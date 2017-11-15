@@ -15,13 +15,13 @@ a2enmod php7.0
 export DEBIAN_FRONTEND="noninteractive"
 # # Import MySQL 5.7 Key
 # # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
-apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 5072E1F5
+apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 5072E1F5 2> /dev/null
 echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | tee -a /etc/apt/sources.list.d/mysql.list
-apt-get update
+apt-get update 2> /dev/null
 
 debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir select ''"
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password ${configs[configs][general][mysql_root_pwd]}'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password ${configs[configs][general][mysql_root_pwd]}'
+debconf-set-selections <<< "mysql-server mysql-server/root_password password root"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password root"
 
 apt-get install -y mysql-server 2> /dev/null
 
@@ -65,6 +65,7 @@ cp /etc/vagrant/apache2/skeleton /etc/apache2/sites-available/skeleton 2> /dev/n
 mkdir -p /var/www/html
 echo "<?php phpinfo();" > /var/www/
 
+apt-get install -y composer 2> /dev/null
 apt-get install -y git 2> /dev/null
 
 

@@ -29,6 +29,7 @@ Specifications
 > - PHP 5.6
 > - PHP 7.0
 > - PHP 7.1
+> - PhpMyAdmin
 > - XDebug
 > - Composer
 > - Redis
